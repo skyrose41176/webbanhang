@@ -1,0 +1,108 @@
+
+        <!-- Begin Li's Breadcrumb Area -->
+            <div class="breadcrumb-area">
+                <div class="container">
+                    <div class="breadcrumb-content">
+                        <ul>
+                            <li><a href="">Home</a></li>
+                            <li class="active">Cart</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Li's Breadcrumb Area End Here -->
+            <!--Shopping Cart Area Strat-->
+            <div class="Shopping-cart-area pt-60 pb-60">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <form asp-asp-controller="Product" asp-action="Update" >
+                                <div class="table-content table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="li-product-remove">remove</th>
+                                                <th class="li-product-thumbnail">images</th>
+                                                <th class="cart-product-name">Product</th>
+                                                <th class="li-product-price">Unit Price</th>
+                                                <th class="li-product-quantity">Quantity</th>
+                                                <th class="li-product-subtotal">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in ViewBag.cart)
+                                            {
+                                            <tr>
+                                                <td class="li-product-remove"><a  asp-action="remove" asp-route-id="@item.Product.Id"><i class="fa fa-times"></i></a></td>
+                                                <td class="li-product-thumbnail"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.Product.Id"><img src="~/images/product/large-size/ALL/@item.Product.Image" alt="Li's Product Image"></a></td>
+                                                <td class="li-product-name"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.Product.Id">@item.Product.Productname</a></td>
+                                                <td class="li-product-price"><span class="amount"> @string.Format("{0:N0}",@item.Product.Price)VNĐ</span></td>
+                                                <td class="quantity">
+                                                    <label>Quantity</label>
+                                                    <div class="">
+                                                        <input class="cart-plus-minus-box" name="product[]" value="@item.Quantity" id="value" max="@item.Product.Amount" min="1" type="number">
+                                             
+                                                    </div>
+                                                </td>
+                                                <td class="product-subtotal"><span class="amount"> @string.Format("{0:N0}",item.Product.Price * item.Quantity)VNĐ</span></td>
+                                            </tr>  
+                                            }
+                                            @foreach (var item in ViewBag.cartcombo)
+                                            {
+                                            <tr>
+                                                <td class="li-product-remove"><a  asp-controller="Combo" asp-action="remove" asp-route-id="@item.Combo.Id"><i class="fa fa-times"></i></a></td>
+                                                <td class="li-product-thumbnail"><a asp-controller="Combo" asp-action="Details" asp-route-id="@item.Combo.Id"><img src="~/images/product/large-size/Combo/@item.Combo.Image" alt="Li's Product Image"></a></td>
+                                                <td class="li-product-name"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.Combo.Id">@item.Combo.ComboName</a></td>
+                                                <td class="li-product-price"><span class="amount"> @string.Format("{0:N0}",@item.Combo.Total)VNĐ</span></td>
+                                                <td class="quantity">
+                                                    <label>Quantity</label>
+                                                    <div class="">
+                                                        @{
+                                                        var mini =0;
+                                                        foreach(var itemm in ViewBag.cbpro){
+                                                            mini = item.Products.Amount;
+                                                            if(item.Combo.Id == itemm.Combo_Id)
+                                                            {
+                                                                if(mini > itemm.Products.Amount.Next()){
+                                                                        mini = itemm.Products.Amount.Next();
+                                                                }
+                                                            }
+                                                        }
+                                                        @:<input class="" name="combo[]" value="@item.Quantity" max="@mini" min="1" type="number">
+                                                        }
+                                                        
+                                                    </div>
+                                                </td>
+                                                <td class="product-subtotal"><span class="amount"> @string.Format("{0:N0}",item.Combo.Total * item.Quantity)VNĐ</span></td>
+                                            </tr>  
+                                            }    
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="coupon-all">
+                                            <div class="coupon">
+                                                <input class="button" name="update_cart" value="Update cart" type="submit">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5 ml-auto">
+                                        <div class="cart-page-total">
+                                            <h2>Cart totals</h2>
+                                            <ul>
+                                                <li>Subtotal <span>@string.Format("{0:N0}",@ViewBag.count)</span></li>
+                                                <li>Total <span> @string.Format("{0:N0}",@ViewBag.total)VNĐ</span></li>
+                                            </ul>
+                                            <a asp-controller="Checkout" asp-action="Index">Proceed to checkout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Shopping Cart Area End-->    

@@ -1,0 +1,323 @@
+@model WebShop.Models.Customer
+@using Microsoft.AspNetCore.Http
+
+@{
+    ViewData["Title"] = "Login Register";
+}
+<!-- Begin Li's Breadcrumb Area -->
+            <div class="breadcrumb-area">
+                <div class="container">
+                    <div class="breadcrumb-content">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li class="active">@ViewData["Title"]</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Li's Breadcrumb Area End Here -->
+            <!-- Begin Login Content Area -->
+            <div class="page-section mb-60">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
+                                <div class="login-form">
+                                    <h4 class="login-title">Infomation</h4>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-20">
+                                            <label for="UserName">UserName</label>
+                                            <div class="mb-0" id="UserName" >@ViewBag.cus.UserName  <a asp-action="Edit" asp-route-id="UserName" class="text-primary">Change</a></div>
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-20">
+                                            <label for="FirstName">FirstName</label>
+                                            <div class="mb-0" id="FirstName" >@ViewBag.cus.FirstName  <a asp-action="Edit" asp-route-id="FirstName" class="text-primary">Change</a></div>
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-20">
+                                            <label for="LastName">LastName</label>
+                                            <div class="mb-0" id="LastName" >@ViewBag.cus.LastName  <a asp-action="Edit" asp-route-id="LastName" class="text-primary">Change</a></div>
+                                        </div>
+                                        <div class="col-md-12 mb-20">
+                                            <label for="Email">Email</label>
+                                            <div class="mb-0" id="Email" >@ViewBag.cus.Email  <a asp-action="Edit" asp-route-id="Email" class="text-primary">Change</a></div>
+                                        </div>
+                                         <div class="col-md-12 mb-20">
+                                            <label for="Phone">Phone</label>
+                                            <div class="mb-0" id="Phone" >@ViewBag.cus.Phone  <a asp-action="Edit" asp-route-id="Phone" class="text-primary">Change</a></div>
+                                        </div>
+                                        <div class="col-md-12 mb-20">
+                                            <label for="Birthdate">Birthdate</label>
+                                            <div class="mb-0" id="Birthdate" >@ViewBag.cus.Birthdate  <a asp-action="Edit" asp-route-id="Birthdate" class="text-primary">Change</a></div>
+                                        </div>
+                                         <div class="col-md-6 col-12 mb-20 form-check">
+                                            <label>Gender</label>
+                                            <div class="mb-0">@ViewBag.cus.Gender  <a asp-action="Edit" asp-route-id="Gender" class="text-primary">Change</a></div>
+                                        </div>
+                                        <div class="col-md-12 mb-20">
+                                            <label for="Address">Address</label>
+                                            <div class="mb-0" id="Address" >@ViewBag.cus.Address  <a asp-action="Edit" asp-route-id="Address" class="text-primary">Change</a></div>
+                                        </div>
+                                        <div class="col-4">
+                                        <form asp-action="Edit" asp-route-id="Password">
+                                        <button class="register-button mt-0" >Password</button>
+                                        </form>
+                                        </div>
+                                        <div class="col-4">
+                                            <form asp-action="Edit" asp-route-id="History">
+                                            <button class="register-button mt-0" >History</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-4">
+                                            <form asp-action="Logout">
+                                            <button class="register-button mt-0" >Log Out</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
+                            @if(Context.Session.GetString("User") == "10"){
+                                @if(Context.Session.GetString("invoice") != null){
+                                    @if(Context.Session.GetString("details") != null){
+                                        <table class="table" >
+                                            <thead>
+                                                <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Quantity</th>
+                                                <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if(@ViewBag.cart != null){
+                                                    @foreach (var item in @ViewBag.cart)
+                                                    {
+                                                        <tr>
+                                                            <th>
+                                                                <div asp-controller="Product" asp-action="Details" asp-route-id="@item.Product.Id">
+                                                                    <img width="100px" height="100px" class="sm-image" src="~/images/product/large-size/All/@item.Product.Image" alt="Li's Product Image">
+                                                                </div>
+                                                            </th>
+                                                            <td>
+                                                                <a class="product_name" asp-controller="Product" asp-action="Details" asp-route-id="@item.Product.Id">@item.Product.Productname
+                                                                </a>
+                                                            </td>
+                                                            <td>@string.Format("{0:N0}", @item.Product.Price)VNĐ</td>
+                                                            <td>@item.Quantity</td>
+                                                            <th><a asp-controller="Product" asp-action="Details" asp-route-id="@item.Product.Id">Detail</a></th>
+                                                        </tr>
+                                                    }
+                                                }
+                                                @if(@ViewBag.cartcombo != null){
+                                                    @foreach (var item in @ViewBag.cartcombo)
+                                                    {
+                                                        <tr>
+                                                            <th>
+                                                                <div asp-controller="Combo" asp-action="Details" asp-route-id="@item.Combo.Id">
+                                                                    <img width="100px" height="100px" class="sm-image" src="~/images/product/large-size/Combo/@item.Combo.Image" alt="Li's Product Image">
+                                                                </div>
+                                                            </th>
+                                                            <td>
+                                                                <a class="product_name" asp-controller="Combo" asp-action="Details" asp-route-id="@item.Combo.Id">@item.Combo.ComboName
+                                                                </a>
+                                                            </td>
+                                                            <td>@string.Format("{0:N0}", @item.Combo.Total)VNĐ</td>
+                                                            <td>@item.Quantity</td>
+                                                            <th><a asp-controller="Combo" asp-action="Details" asp-route-id="@item.Combo.Id">Detail</a></th>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                            </table>
+                                    }else{
+                                        <table class="table" >
+                                            <thead>
+                                                <tr>
+                                                <th scope="col">Day</th>
+                                                <th scope="col">TotalMoney</th>
+                                                <th scope="col">Amount</th>
+                                                <th scope="col">Address</th>
+                                                <th scope="col">Status</th>
+                                                <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in @ViewBag.invoice)
+                                                {
+                                                    <tr>
+                                                        <th scope="row">@item.CreateDay</th>
+                                                        <td>@string.Format("{0:N0}", @item.TotalMoney)VNĐ</td>
+                                                        <td>@item.amount</td>
+                                                        <td>@item.CustomerAddress</td>
+                                                        <td>@item.status</td>
+                                                        <th><a  asp-action="Edit" asp-action="Detail" asp-route-id="@item.Id"  >Detail</a></th>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                            </table>
+                                    }
+                            }else{
+                                    <table class="table">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">Day</th>
+                                        <th scope="col">TotalMoney</th>
+                                        <th scope="col">Amount</th>
+                                        <th scope="col">CustomerAddress</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                        <th scope="row" colspan="4" align="center">
+                                            @Html.ActionLink("Buy Some Thing", "Product")
+                                        </th>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                    <div class="login-form">
+                                    <div class="col-12 mb-20">
+                                            <button asp-action="Back" class="register-button mt-0">Back</button>
+                                    </div>
+                                     </div>
+                                }
+                            }else{
+                            @using (Html.BeginForm("Save", "Login", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="login-form">
+                                    <h4 class="login-title">Edit</h4>
+                                    <div class="row">
+                                        @if(Context.Session.GetString("User") == "1"){
+                                        <div class="col-md-12 mb-20">
+                                        @Html.LabelFor(m => m.UserName)
+                                        <input class="mb-0" data-val="true" data-val-length="The field UserName must be a string with a minimum length of 4 and a maximum length of 1000." data-val-length-max="1000" data-val-length-min="4" data-val-required="The UserName field is required." id="UserName" maxlength="1000" name="UserName" placeholder="User Name" type="text" value= "@ViewBag.cus.UserName" >
+                                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "badge badge-danger" })
+                                        @if (Context.Session.GetString("Editfail") != null)
+                                        {
+                                            <span class="badge badge-danger">@Context.Session.GetString("Editfail")</span>                                           
+                                        }
+                                        </div>
+                                        }
+                                        @if(Context.Session.GetString("User") == "2"){
+                                        <div class="col-md-12 mb-20">
+                                        @Html.LabelFor(m => m.FirstName)
+                                        <input class="mb-0 input-validation-error" data-val="true" data-val-length="The field FirstName must be a string with a minimum length of 6 and a maximum length of 35." data-val-length-max="35" data-val-length-min="6" data-val-required="The FirstName field is required." id="FirstName" maxlength="35" name="FirstName" placeholder="First Name" type="text" value="@ViewBag.cus.FirstName" aria-describedby="FirstName-error" aria-invalid="true">
+                                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "badge badge-danger" })
+                                        @if (Context.Session.GetString("Editfail") != null)
+                                        {
+                                            <span class="badge badge-danger">@Context.Session.GetString("Editfail")</span>                                           
+                                        }
+                                        </div>
+                                        }
+                                        @if(Context.Session.GetString("User") == "3"){
+                                        <div class="col-md-12 mb-20">
+                                        @Html.LabelFor(m => m.LastName)
+                                        <input class="mb-0 input-validation-error" data-val="true" data-val-length="The field LastName must be a string with a minimum length of 6 and a maximum length of 1000." data-val-length-max="1000" data-val-length-min="6" data-val-required="The LastName field is required." id="LastName" maxlength="1000" name="LastName" placeholder="Last Name" type="text" value="@ViewBag.cus.LastName" aria-describedby="LastName-error" aria-invalid="true">
+                                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "badge badge-danger" })
+                                         @if (Context.Session.GetString("Editfail") != null)
+                                        {
+                                            <span class="badge badge-danger">@Context.Session.GetString("Editfail")</span>                                           
+                                        }
+                                        </div>
+                                        }
+                                        @if(Context.Session.GetString("User") == "4"){
+                                        <div class="col-md-12 mb-20">
+                                        @Html.LabelFor(m => m.Email)
+                                        <input class="mb-0 input-validation-error" data-val="true" data-val-length="The field Email must be a string with a maximum length of 1000." data-val-length-max="1000" data-val-regex="@ViewBag.validate" data-val-regex-pattern="@ViewBag.validate1" data-val-required="The Email field is required." id="Email" maxlength="1000" name="Email" placeholder="Email" type="text" value="@ViewBag.cus.Email" aria-describedby="Email-error" aria-invalid="true">
+                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "badge badge-danger" })
+                                        @if (Context.Session.GetString("Editfail") != null)
+                                        {
+                                            <span class="badge badge-danger">@Context.Session.GetString("Editfail")</span>                                           
+                                        }
+                                        </div>
+                                        }
+                                        @if(Context.Session.GetString("User") == "5"){
+                                        <div class="col-md-12 mb-20">
+                                        @Html.LabelFor(m => m.Phone)
+                                        <input class="mb-0" data-val="true" data-val-length="The field Phone must be length 10." data-val-length-max="10" data-val-length-min="10" data-val-required="The Phone field is required." id="Phone" maxlength="10" name="Phone" placeholder="Phone" type="text" value="@ViewBag.cus.Phone">
+                                        @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "badge badge-danger" })
+                                        @if (Context.Session.GetString("Editfail") != null)
+                                        {
+                                            <span class="badge badge-danger">@Context.Session.GetString("Editfail")</span>                                           
+                                        }
+                                        </div>
+                                        }
+                                        @if(Context.Session.GetString("User") == "6"){
+                                        <div class="col-md-12 mb-20">
+                                        @Html.LabelFor(m => m.Birthdate)
+                                        <input class="mb-0 input-validation-error" data-val="true" data-val-required="The Birthdate field is required." id="Birthdate" name="Birthdate" placeholder="Birthdate" type="date" value="@ViewBag.cus.Birthdate" aria-describedby="Birthdate-error" aria-invalid="true">
+                                        @Html.ValidationMessageFor(m => m.Birthdate, "", new { @class = "badge badge-danger" })
+                                         @if (Context.Session.GetString("Editfail") != null)
+                                        {
+                                            <span class="badge badge-danger">@Context.Session.GetString("Editfail")</span>                                           
+                                        }
+                                        </div>
+                                        }
+                                        @if(Context.Session.GetString("User") == "7"){
+                                         <div class="col-md-12 mb-20 form-check form-check-inline">
+                                            <label>Gender</label>
+                                            @if(ViewBag.cus.Gender == "Male"){
+                                            <input class="form-check-input" type="radio" checked name="Gender" id="inlineRadio1" value="Male">
+                                            <label class="form-check-label" for="inlineRadio1">Male</label>
+                                            <input class="form-check-input" type="radio" name="Gender" id="inlineRadio2" value="Female">
+                                            <label class="form-check-label" for="inlineRadio2">Female</label>
+                                            }else{
+                                                <input class="form-check-input" type="radio"  name="Gender" id="inlineRadio1" value="Male">
+                                            <label class="form-check-label" for="inlineRadio1">Male</label>
+                                            <input class="form-check-input" type="radio" checked name="Gender" id="inlineRadio2" value="Female">
+                                            <label class="form-check-label" for="inlineRadio2">Female</label>
+                                            }
+                                            @if (Context.Session.GetString("Editfail") != null)
+                                            {
+                                                <span class="badge badge-danger">@Context.Session.GetString("Editfail")</span>                                           
+                                            }
+                                        </div>
+                                        }
+                                        @if(Context.Session.GetString("User") == "8"){
+                                        <div class="col-md-12 mb-20">
+                                        @Html.LabelFor(m => m.Address)
+                                        <input class="mb-0 input-validation-error" data-val="true" data-val-length="The field Address must be a string with a minimum length of 3 and a maximum length of 1000." data-val-length-max="1000" data-val-length-min="3" data-val-required="The Address field is required." id="Address" maxlength="1000" name="Address" placeholder="Address" type="text" value="@ViewBag.cus.Address" aria-describedby="Address-error" aria-invalid="true">
+                                        @Html.ValidationMessageFor(m => m.Address, "", new { @class = "badge badge-danger" })
+                                        @if (Context.Session.GetString("Editfail") != null)
+                                        {
+                                            <span class="badge badge-danger">@Context.Session.GetString("Editfail")</span>                                           
+                                        }
+                                        </div>
+                                        }
+                                        @if(Context.Session.GetString("User") == "9"){
+                                        <div class="col-md-12 mb-20">
+                                        <label for="OldPassWord">Old PassWord</label>
+                                        <input class="mb-0" data-val="true" data-val-length="The field PassWord must be a string with a minimum length of 6 and a maximum length of 1000." data-val-length-max="1000" data-val-length-min="6" data-val-required="The Old PassWord field is required." id="OldPassWord" maxlength="1000" name="OldPassWord" placeholder="Old PassWord" type="password" value="">
+                                        <span class="field-validation-valid badge badge-danger" data-valmsg-for="OldPassWord" data-valmsg-replace="true"></span>
+                                        @if (Context.Session.GetString("Editfail") != null)
+                                        {
+                                            <span class="badge badge-danger">@Context.Session.GetString("Editfail")</span>                                           
+                                        }
+                                        </div>
+                                        <div class="col-md-6 mb-20">
+                                        @Html.LabelFor(m => m.PassWord)
+                                        @Html.TextBoxFor(m => m.PassWord, "", new { @class = "mb-0", @placeholder = "PassWord",@type="password" })
+                                        @Html.ValidationMessageFor(m => m.PassWord, "", new { @class = "badge badge-danger" })
+                                        </div>
+                                        <div class="col-md-6 mb-20">
+                                        @Html.LabelFor(m => m.ConfirmPassword)
+                                        @Html.TextBoxFor(m => m.ConfirmPassword, "", new { @class = "mb-0", @placeholder = "ConfirmPassword",@type="password" })
+                                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "badge badge-danger" })
+                                        </div>
+                                       
+                                        }
+                                        <div class="col-6">
+                                            <button type="submit" class="register-button mt-0">Save</button>
+                                        </div>
+                                        <div class="col-6">
+                                            <button asp-action="Back" class="register-button mt-0">Back</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Login Content Area End Here -->

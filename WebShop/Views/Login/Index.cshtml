@@ -1,0 +1,134 @@
+@model WebShop.Models.Customer
+@using Microsoft.AspNetCore.Http
+
+@{
+    ViewData["Title"] = "Login Register";
+}
+<!-- Begin Li's Breadcrumb Area -->
+            <div class="breadcrumb-area">
+                <div class="container">
+                    <div class="breadcrumb-content">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li class="active">@ViewData["Title"]</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Li's Breadcrumb Area End Here -->
+            <!-- Begin Login Content Area -->
+            <div class="page-section mb-60">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
+                            <!-- Login Form s-->
+                            @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="login-form">
+                                    <h4 class="login-title">Login</h4>
+                                    <div class="row">
+                                        <div class="col-md-12 col-12 mb-20">
+                                        @Html.LabelFor(m => m.UserName)
+                                        @Html.TextBoxFor(m => m.UserName, "", new { @class = "mb-0", @placeholder = "User Name" })
+                                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "badge badge-danger" })
+                                        </div>
+                                        <div class="col-12 mb-20">
+                                        @Html.LabelFor(m => m.PassWord)
+                                        @Html.TextBoxFor(m => m.PassWord, "", new { @class = "mb-0", @placeholder = "PassWord" ,@type="Password"})
+                                        @Html.ValidationMessageFor(m => m.PassWord, "", new { @class = "badge badge-danger" })
+                                        </div>
+                                        <div class="col-md-8">
+                                        @if (Context.Session.GetString("loginfail") != null)
+                                        {
+                                            <span class="badge badge-danger">@Context.Session.GetString("loginfail")</span>                                           
+                                        }
+                                        </div>
+                                        <div class="col-md-4 mt-10 mb-20 text-left text-md-right">
+                                            <a href="#"> Forgotten pasward?</a>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="register-button mt-0">Login</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
+                            @using (Html.BeginForm("Register", "Login", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="login-form">
+                                    <h4 class="login-title">Register</h4>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-20">
+                                        @Html.LabelFor(m => m.UserName)
+                                        @Html.TextBoxFor(m => m.UserName, "", new { @class = "mb-0", @placeholder = "User Name" })
+                                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "badge badge-danger" })
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-20">
+                                        @Html.LabelFor(m => m.FirstName)
+                                        @Html.TextBoxFor(m => m.FirstName, "", new { @class = "mb-0", @placeholder = "First Name" })
+                                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "badge badge-danger" })
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-20">
+                                        @Html.LabelFor(m => m.LastName)
+                                        @Html.TextBoxFor(m => m.LastName, "", new { @class = "mb-0", @placeholder = "Last Name" })
+                                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "badge badge-danger" })
+                                        </div>
+                                        <div class="col-md-12 mb-20">
+                                        @Html.LabelFor(m => m.Email)
+                                        @Html.TextBoxFor(m => m.Email, "", new { @class = "mb-0", @placeholder = "Email" })
+                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "badge badge-danger" })
+                                        @if (ViewBag.error != null)
+                                        {
+                                            <span class="badge badge-danger">@ViewBag.error</span>
+                                        }
+                                        </div>
+                                         <div class="col-md-12 mb-20">
+                                        @Html.LabelFor(m => m.Phone)
+                                        @Html.TextBoxFor(m => m.Phone, "", new { @class = "mb-0", @placeholder = "Phone" })
+                                        @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "badge badge-danger" })
+                                        @if (ViewBag.error != null)
+                                        {
+                                            <span class="badge badge-danger">@ViewBag.error</span>
+                                        }
+                                        </div>
+                                        <div class="col-md-12 mb-20">
+                                        @Html.LabelFor(m => m.Birthdate)
+                                        @Html.TextBoxFor(m => m.Birthdate, "", new { @class = "mb-0", @placeholder = "Birthdate" ,@type="date"})
+                                        @Html.ValidationMessageFor(m => m.Birthdate, "", new { @class = "badge badge-danger" })
+                                        </div>
+                                         <div class="col-md-6 col-12 mb-20 form-check form-check-inline">
+                                            <label>Gender</label>
+                                            <input class="form-check-input" type="radio" name="Gender" id="inlineRadio1" value="Male">
+                                            <label class="form-check-label" for="inlineRadio1">Male</label>
+                                            <input class="form-check-input" type="radio" name="Gender" id="inlineRadio2" value="Female">
+                                            <label class="form-check-label" for="inlineRadio2">Female</label>
+                                        </div>
+                                        <div class="col-md-12 mb-20">
+                                        @Html.LabelFor(m => m.Address)
+                                        @Html.TextBoxFor(m => m.Address, "", new { @class = "mb-0", @placeholder = "Address" })
+                                        @Html.ValidationMessageFor(m => m.Address, "", new { @class = "badge badge-danger" })
+                                        </div>
+                                        <div class="col-md-6 mb-20">
+                                        @Html.LabelFor(m => m.PassWord)
+                                        @Html.TextBoxFor(m => m.PassWord, "", new { @class = "mb-0", @placeholder = "PassWord",@type="password" })
+                                        @Html.ValidationMessageFor(m => m.PassWord, "", new { @class = "badge badge-danger" })
+                                        </div>
+                                        <div class="col-md-6 mb-20">
+                                        @Html.LabelFor(m => m.ConfirmPassword)
+                                        @Html.TextBoxFor(m => m.ConfirmPassword, "", new { @class = "mb-0", @placeholder = "ConfirmPassword",@type="password" })
+                                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "badge badge-danger" })
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit" class="register-button mt-0">Register</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Login Content Area End Here -->
