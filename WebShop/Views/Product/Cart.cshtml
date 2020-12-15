@@ -4,7 +4,7 @@
                 <div class="container">
                     <div class="breadcrumb-content">
                         <ul>
-                            <li><a href="">Home</a></li>
+                            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                             <li class="active">Cart</li>
                         </ul>
                     </div>
@@ -21,7 +21,7 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th class="li-product-remove">remove</th>
+                                                <th class="li-product-remove"></th>
                                                 <th class="li-product-thumbnail">images</th>
                                                 <th class="cart-product-name">Product</th>
                                                 <th class="li-product-price">Unit Price</th>
@@ -38,7 +38,6 @@
                                                 <td class="li-product-name"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.Product.Id">@item.Product.Productname</a></td>
                                                 <td class="li-product-price"><span class="amount"> @string.Format("{0:N0}",@item.Product.Price)VNĐ</span></td>
                                                 <td class="quantity">
-                                                    <label>Quantity</label>
                                                     <div class="">
                                                         <input class="cart-plus-minus-box" name="product[]" value="@item.Quantity" id="value" max="@item.Product.Amount" min="1" type="number">
                                              
@@ -47,33 +46,19 @@
                                                 <td class="product-subtotal"><span class="amount"> @string.Format("{0:N0}",item.Product.Price * item.Quantity)VNĐ</span></td>
                                             </tr>  
                                             }
-                                            @foreach (var item in ViewBag.cartcombo)
+                                            @foreach (var item in ViewBag.carcombo2)
                                             {
                                             <tr>
-                                                <td class="li-product-remove"><a  asp-controller="Combo" asp-action="remove" asp-route-id="@item.Combo.Id"><i class="fa fa-times"></i></a></td>
-                                                <td class="li-product-thumbnail"><a asp-controller="Combo" asp-action="Details" asp-route-id="@item.Combo.Id"><img src="~/images/product/large-size/Combo/@item.Combo.Image" alt="Li's Product Image"></a></td>
-                                                <td class="li-product-name"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.Combo.Id">@item.Combo.ComboName</a></td>
-                                                <td class="li-product-price"><span class="amount"> @string.Format("{0:N0}",@item.Combo.Total)VNĐ</span></td>
+                                                <td class="li-product-remove"><a  asp-controller="Combo" asp-action="remove" asp-route-id="@item.combos.Combo.Id"><i class="fa fa-times"></i></a></td>
+                                                <td class="li-product-thumbnail"><a asp-controller="Combo" asp-action="Details" asp-route-id="@item.combos.Combo.Id"><img src="~/images/product/large-size/Combo/@item.combos.Combo.Image" alt="Li's Product Image"></a></td>
+                                                <td class="li-product-name"><a asp-controller="Combo" asp-action="Details" asp-route-id="@item.combos.Combo.Id">@item.combos.Combo.ComboName</a></td>
+                                                <td class="li-product-price"><span class="amount"> @string.Format("{0:N0}",@item.combos.Combo.Total)VNĐ</span></td>
                                                 <td class="quantity">
-                                                    <label>Quantity</label>
                                                     <div class="">
-                                                        @{
-                                                        var mini =0;
-                                                        foreach(var itemm in ViewBag.cbpro){
-                                                            mini = item.Products.Amount;
-                                                            if(item.Combo.Id == itemm.Combo_Id)
-                                                            {
-                                                                if(mini > itemm.Products.Amount.Next()){
-                                                                        mini = itemm.Products.Amount.Next();
-                                                                }
-                                                            }
-                                                        }
-                                                        @:<input class="" name="combo[]" value="@item.Quantity" max="@mini" min="1" type="number">
-                                                        }
-                                                        
+                                                        <input class="" name="combo[]" value="@item.combos.Quantity" max="@item.quantity" min="1" type="number">
                                                     </div>
                                                 </td>
-                                                <td class="product-subtotal"><span class="amount"> @string.Format("{0:N0}",item.Combo.Total * item.Quantity)VNĐ</span></td>
+                                                <td class="product-subtotal"><span class="amount"> @string.Format("{0:N0}",item.combos.Combo.Total * item.combos.Quantity)VNĐ</span></td>
                                             </tr>  
                                             }    
                                         </tbody>

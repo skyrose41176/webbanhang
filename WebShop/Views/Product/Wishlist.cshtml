@@ -6,7 +6,7 @@
                 <div class="container">
                     <div class="breadcrumb-content">
                         <ul>
-                            <li><a href="">Home</a></li>
+                            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                             <li class="active">@ViewData["Title"]</li>
                         </ul>
                     </div>
@@ -23,11 +23,10 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th class="li-product-remove">remove</th>
+                                                <th class="li-product-remove"></th>
                                                 <th class="li-product-thumbnail">images</th>
                                                 <th class="cart-product-name">Product</th>
                                                 <th class="li-product-price">Unit Price</th>
-                                                <th class="li-product-stock-status">Stock Status</th>
                                                 <th class="li-product-add-cart">add to cart</th>
                                             </tr>
                                         </thead>
@@ -39,7 +38,6 @@
                                                 <td class="li-product-thumbnail"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.Product.Id"><img src="~/images/product/large-size/ALL/@item.Product.Image" alt=""></a></td>
                                                 <td class="li-product-name"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.Product.Id">@item.Product.Productname</a></td>
                                                 <td class="li-product-price"><span class="amount">@string.Format("{0:N0}",@item.Product.Price)VNĐ</span></td>
-                                                <td class="li-product-stock-status"><span class="in-stock">in stock</span></td>
                                                 <td class="li-product-add-cart"><a  asp-action="AddtoCart" asp-route-id="@item.Product.Id" >add to cart</a></td>
                                             </tr>
                                             }
@@ -50,7 +48,6 @@
                                                 <td class="li-product-thumbnail"><a asp-controller="Combo" asp-action="Details" asp-route-id="@item.Combo.Id"><img src="~/images/product/large-size/Combo/@item.Combo.Image" alt=""></a></td>
                                                 <td class="li-product-name"><a asp-controller="Combo" asp-action="Details" asp-route-id="@item.Combo.Id">@item.Combo.ComboName</a></td>
                                                 <td class="li-product-price"><span class="amount">@string.Format("{0:N0}",@item.Combo.Total)VNĐ</span></td>
-                                                <td class="li-product-stock-status"><span class="in-stock">in stock</span></td>
                                                 <td class="li-product-add-cart"><a asp-controller="Combo" asp-action="AddtoCart" asp-route-id="@item.Combo.Id" >add to cart</a></td>
                                             </tr>
                                             }

@@ -1,9 +1,20 @@
 @{
     ViewData["Title"] = "Checkout";
      if(Context.Session.GetString("success") != null){
-       @:<script>alert("Thanh toán thành công!!!")</script>
+       if(Context.Session.GetString("success") == "success" ){
+       @:<script>alert("Thanh toán thành công!!!");</script>
        Context.Session.Remove("success");
+       }
+       if(Context.Session.GetString("success") == "cancel"){
+       @:<script>alert("Huỷ Thanh toán!!!");</script>
+       Context.Session.Remove("success");
+       }
      }
+     @if (Context.Session.GetString("Block") != null)
+    {
+        @:<script>alert("Your Account Has Been Block")</script>
+        Context.Session.Remove("Block");
+    }
 }
 @model WebShop.Models.Customer;
 @using Microsoft.AspNetCore.Http 
@@ -12,7 +23,7 @@
                 <div class="container">
                     <div class="breadcrumb-content">
                         <ul>
-                            <li><a href="">Home</a></li>
+                            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                             <li class="active">@ViewData["Title"]</li>
                         </ul>
                     </div>

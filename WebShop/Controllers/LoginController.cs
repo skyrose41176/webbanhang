@@ -13,7 +13,6 @@ using WebShop.Helpers;
 using WebShop.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace WebShop.Controllers
 {
@@ -127,7 +126,7 @@ namespace WebShop.Controllers
                         customer.PassWord = GetMD5(customer.PassWord);
                         customer.JoinDate= DateTime.Now;
                         customer.isNew= true;
-                        customer.status= "open";
+                        customer.status= "Active";
                         _context.Customer.Add(customer);
                         await _context.SaveChangesAsync();
                         //add session
@@ -154,14 +153,12 @@ namespace WebShop.Controllers
                 var data =_context.Customer.Where(s => s.UserName.Equals(username) && s.PassWord.Equals(f_password)).ToList();
                 if (data.Count() > 0)
                 {
-                    var customers = from s in _context.Customer
-                    select s; 
-                    var cus = _context.Customer.FirstOrDefault(s => s.Id == HttpContext.Session.GetInt32("idUser") );
-                    if(cus.status == "Block"){
+                    var customers = data.First();
+                    if(customers.status == "Block"){
                         HttpContext.Session.SetString("Block","Block");
-                        return View();
+                        return Redirect("/Login");
                     }
-                    ViewBag.cus = cus;
+                    ViewBag.cus = customers;
                     HttpContext.Session.Remove("loginfail");
                     //add session
                     HttpContext.Session.SetString("FullName", data.FirstOrDefault().FirstName +" "+ data.FirstOrDefault().LastName);
@@ -251,7 +248,9 @@ namespace WebShop.Controllers
                         ViewBag.invoice= invoice;
                         HttpContext.Session.SetString("invoice","access");
                     }
-                }else{
+                }
+                var number=0;
+                if(int.TryParse(id,out number)){
                     var details = _context.InvoiceDetail.FirstOrDefault(s => s.Invoice_Id == Int32.Parse(id));
                     Item[] cart=null;
                     ItemCombo[] cartcombo=null;
@@ -261,7 +260,6 @@ namespace WebShop.Controllers
                     if(details.Combos != null){
                         cartcombo = JsonConvert.DeserializeObject<ItemCombo[]>(details.Combos);
                     }
-                    var a= cart[0].Product;
                     HttpContext.Session.SetString("details","access");
                     ViewBag.cart=cart;
                     ViewBag.cartcombo=cartcombo;

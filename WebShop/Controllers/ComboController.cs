@@ -169,7 +169,7 @@ namespace WebShop.Controllers
                 }
                 SessionCombo.SetObjectAsJsonCombo(HttpContext.Session, "cartcombo", cart);
             }
-            return RedirectToAction("");
+            return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
         }
         public IActionResult Remove(int? id)
         {
@@ -177,7 +177,7 @@ namespace WebShop.Controllers
             int index = isExist(id);
             cart.RemoveAt(index);
             SessionCombo.SetObjectAsJsonCombo(HttpContext.Session, "cartcombo", cart);
-            return RedirectToAction("");
+            return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
         }
         public IActionResult Removex(int? id)
         {
@@ -185,7 +185,7 @@ namespace WebShop.Controllers
             int index = isExist(id);
             cart.RemoveAt(index);
             SessionCombo.SetObjectAsJsonCombo(HttpContext.Session, "cartcombo", cart);
-            return RedirectToAction("");
+            return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
         }
         private int isExist(int? id)
         {
@@ -303,7 +303,7 @@ namespace WebShop.Controllers
                 }
                 SessionWish.SetObjectAsJsonWish(HttpContext.Session, "wishcombo", wish);
             }
-            return RedirectToAction("");
+            return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
         }
          public IActionResult Removewish(int? id)
         {
@@ -311,7 +311,7 @@ namespace WebShop.Controllers
             int index = isExistwish(id);
             wish.RemoveAt(index);
             SessionWish.SetObjectAsJsonWish(HttpContext.Session, "wishcombo", wish);
-            return RedirectToAction("");
+            return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
         }
         private int isExistwish(int? id)
         {

@@ -122,7 +122,6 @@ namespace WebShop.Controllers
                     .Where(s => s.Price > 10000000)
                     .ToListAsync();
             ViewBag.New = New;
-
             return View();  
         }
         public async Task<IActionResult> About()

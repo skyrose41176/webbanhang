@@ -1,11 +1,4 @@
 ﻿
-@{
-    @if (Context.Session.GetString("Block") != null)
-    {
-        @:<script>alert("Your Account Has Been Block")</script>
-        Context.Session.Remove("Block");
-    }
-}
 <!doctype html>
 <html lang="en">
 @using Microsoft.AspNetCore.Http 
@@ -55,6 +48,13 @@
     </head>
     <body>
         <header>
+            @{
+            @if (Context.Session.GetString("Block") != null)
+            {
+                @:<script>alert("Your Account Has Been Block")</script>
+                Context.Session.Remove("Block");
+            }
+        }
                 <!-- Begin Header Top Area -->
                 <div class="header-top">
                     <div class="container">
@@ -79,23 +79,14 @@
                                                 <span class="currency-selector-wrapper">Hello <a asp-controller="Login" asp-action="Account" >@Context.Session.GetString("FullName")</a> </span>
                                             }
                                         </li>
-                                        <li>
-                                            <div class="ht-setting-trigger"><span>Setting</span></div>
-                                            <div class="setting ht-setting">
-                                                <ul class="ht-setting-list">
-                                                    @if (Context.Session.GetInt32("idUser") != null)
+                                                @if (Context.Session.GetInt32("idUser") != null)
                                                     {
                                                     <li><a  asp-controller="Login" asp-action="account">My Account</a></li>
-                                                    <li><a  asp-controller="Checkout" asp-action="Index">Checkout</a></li>
                                                     <li><a  asp-controller="Login" asp-action="logout" >Log Out</a></li>
                                                     }
-                                                    else{
-                                                        <li><a  asp-controller="Checkout" asp-action="Index">Checkout</a></li>
-                                                        <li><a  asp-controller="Login" asp-action="Index">Sign In</a></li>
-                                                    }
-                                                </ul>
-                                            </div>
-                                        </li>
+                                                else{
+                                                    <li><a  asp-controller="Login" asp-action="Index">Sign In</a></li>
+                                                }
                                         <!-- Setting Area End Here -->                                                                          
                                     </ul>
                                 </div>
@@ -251,10 +242,10 @@
                                                 </ul>  
                                             </li> 
                                             <li></li>                                              
-                                            <li><a  asp-controller="Combo" asp-action="" >Combo</a></li>                                                          
+                                            <li><a  asp-controller="Combo" asp-action="Index" >Combo</a></li>
+                                            <li><a  asp-controller="Product" asp-action="Index" >Product</a></li>                                                          
                                             <li><a  asp-controller="Home" asp-action="About" >About Us</a></li>
-                                            <li><a  asp-controller="Home" asp-action="Contact">Contact</a></li>                                           
-                                            <li><a href="/Product" >Product</a></li>
+                                            <li><a  asp-controller="Home" asp-action="Contact">Contact</a></li>  
                                         </ul>
                                     </nav>
                                 </div>

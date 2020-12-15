@@ -9,7 +9,7 @@
                 <div class="container">
                     <div class="breadcrumb-content">
                         <ul>
-                            <li><a href="index.html">Home</a></li>
+                            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                             <li class="active">@ViewData["Title"]</li>
                         </ul>
                     </div>
@@ -150,7 +150,7 @@
                                                         <td>@item.amount</td>
                                                         <td>@item.CustomerAddress</td>
                                                         <td>@item.status</td>
-                                                        <th><a  asp-action="Edit" asp-action="Detail" asp-route-id="@item.Id"  >Detail</a></th>
+                                                        <th><a asp-controller="Login" asp-action="Edit" asp-route-id="@item.Id" >Detail</a></th>
                                                     </tr>
                                                 }
                                             </tbody>

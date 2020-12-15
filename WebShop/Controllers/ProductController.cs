@@ -19,6 +19,10 @@ namespace WebShop.Controllers
         {
             _context = context;
         }
+        public class temp{
+            public ItemCombo combos{get;set;}
+            public int? quantity{get;set;}
+        }
         public void check(){
               //cart
             var count=0;
@@ -47,6 +51,24 @@ namespace WebShop.Controllers
             var cartcombo = SessionCombo.GetObjectFromJsonCombo<List<ItemCombo>>(HttpContext.Session, "cartcombo");
             if(cartcombo != null){
             ViewBag.cartcombo = cartcombo;
+            List<temp> a = new List<temp>();
+            foreach(var item in cartcombo){
+                temp temps= new temp();
+                int? minn=0;
+                var list =  _context.ComboProduct.Include("Products")
+                .Where(s => s.Combo_Id == item.Combo.Id).ToList();
+                for(int i=1;i < list.Count();i++)
+                {    
+                    minn= list[0].Products.Amount;
+                    if(minn > list[i].Products.Amount)
+                    minn = list[i].Products.Amount;
+                }
+                temps.combos=item;
+                temps.quantity=minn;
+                a.Add(temps);
+            }
+            ViewBag.carcombo2 = a;
+            
             var combototal =  ViewBag.total + cartcombo.Sum(item => item.Combo.Total * item.Quantity);
             countcombo = countcombo + cartcombo.Sum(item => item.Quantity);
             ViewBag.count = countcombo;
@@ -58,6 +80,8 @@ namespace WebShop.Controllers
             }
             }else{
                 List<ItemCombo> cart1 = new List<ItemCombo>();
+                List<temp> a = new List<temp>();
+                ViewBag.carcombo2 = a;
                 SessionCombo.SetObjectAsJsonCombo(HttpContext.Session, "cartcombo", cart1);
                 ViewBag.cartcombo = cart1;
                 ViewBag.count = 0;
@@ -229,11 +253,10 @@ namespace WebShop.Controllers
             ViewBag.cate= cate;
             check();
             wish();
-            ViewBag.cbpro = await _context.ComboProduct.ToListAsync();
             return View();
         }
 
-        public async Task<IActionResult>  AddtoCart(int? id)
+        public async Task<IActionResult> AddtoCart(int? id)
         {
             
             var products = from s in _context.Product
@@ -270,7 +293,7 @@ namespace WebShop.Controllers
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
-            return RedirectToAction("");
+            return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
         }
          public async Task<IActionResult> Remove(int? id)
         {
@@ -282,7 +305,7 @@ namespace WebShop.Controllers
             await _context.SaveChangesAsync();
             cart.RemoveAt(index);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-            return RedirectToAction("Cart");
+            return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
         }
         public IActionResult Removex(int? id)
         {
@@ -290,7 +313,7 @@ namespace WebShop.Controllers
             int index = isExist(id);
             cart.RemoveAt(index);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-            return RedirectToAction("");
+            return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
         }
          
         private int isExist(int? id)
@@ -305,7 +328,6 @@ namespace WebShop.Controllers
             }
             return -1;
         }
-
         //update
         public IActionResult Update()
         {
@@ -324,7 +346,7 @@ namespace WebShop.Controllers
                     SessionCombo.SetObjectAsJsonCombo(HttpContext.Session, "cartcombo", cartcombo);
                 }
             }
-            return RedirectToAction("");
+            return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
         }
         // GET: Product/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -416,15 +438,15 @@ namespace WebShop.Controllers
                 }
                 SessionWish.SetObjectAsJsonWish(HttpContext.Session, "wish", wish);
             }
-            return RedirectToAction("");
+            return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
         }
-         public IActionResult Removewish(int? id)
+        public IActionResult Removewish(int? id)
         {
             List<Item> wish = SessionWish.GetObjectFromJsonWish<List<Item>>(HttpContext.Session, "wish");
             int index = isExistwish(id);
             wish.RemoveAt(index);
             SessionWish.SetObjectAsJsonWish(HttpContext.Session, "wish", wish);
-            return RedirectToAction("wishlist");
+            return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
         }
         private int isExistwish(int? id)
         {

@@ -123,21 +123,23 @@ namespace WebShop.Controllers
         public async Task<IActionResult> sucsess()
         {
             HttpContext.Session.SetString("success","success");
-            return RedirectToAction("Index");
+            return RedirectToAction("Save");
         }
-        public async Task<IActionResult> Save(Customer cus)
+        public async Task<IActionResult> cancel()
         {
-            HttpContext.Session.Remove("success");
+            HttpContext.Session.SetString("success","cancel");
+            return RedirectToAction("Save");
+        }
+        public async Task<IActionResult> Save()
+        {   
             if(Request.HasFormContentType && Request.Form != null && Request.Form.Count() > 0){
-                if(HttpContext.Session.GetString("paypal") == null){
-                HttpContext.Session.SetString("paypal","success");
+                if(HttpContext.Session.GetString("success") == null){
+                string url="";
                 //paypal
                 var payPalAPI = new PayPalAPI(configuration);
                 var totala = Request.Form["total"][0];
                 double total2 = Int32.Parse(totala)/23139  + Int32.Parse(totala)%23139;
-                string url = await payPalAPI.getRedirectUrlToPayPal(total2, "USD");
-                return Redirect(url);
-                }
+                url = await payPalAPI.getRedirectUrlToPayPal(total2, "USD");
                 //adddatabase
                 var Address = Request.Form["Address"][0];
                  HttpContext.Session.SetString("Address",Address);
@@ -146,15 +148,32 @@ namespace WebShop.Controllers
                 var County = Request.Form["County"][0];
                  HttpContext.Session.SetString("County",County);
                 var Postcode = Request.Form["Postcode"][0];
+                HttpContext.Session.SetString("Postcode",Postcode);
                 var Odernote = Request.Form["Odernote"][0];
+                HttpContext.Session.SetString("Odernote",Odernote);
                 var total = Request.Form["total"][0];
-                var Id = Int32.Parse(Request.Form["Id"][0]);
+                HttpContext.Session.SetString("total",total);
+                var Id = Request.Form["Id"][0];
+                HttpContext.Session.SetString("Id",Id);
                 var count = Request.Form["count"][0];
-                
+                HttpContext.Session.SetString("count",count);
+                return Redirect(url);
+            }
+            }
+            if(HttpContext.Session.GetString("success") == "success"){
+                //adddatabase
+                var Address = HttpContext.Session.GetString("Address");
+                var City = HttpContext.Session.GetString("City");
+                var County = HttpContext.Session.GetString("County");
+                var Postcode = HttpContext.Session.GetString("Postcode");
+                var Odernote = HttpContext.Session.GetString("Odernote");
+                var total = HttpContext.Session.GetString("total");
+                var Id = HttpContext.Session.GetString("Id");
+                var count = HttpContext.Session.GetString("count");
                 
                 Invoice invoice = new Invoice();
-                invoice.Customer_Id = Id;
-                invoice.customer = _context.Customer.FirstOrDefault(s => s.Id == Id);
+                invoice.Customer_Id = Int32.Parse(Id);
+                invoice.customer = _context.Customer.FirstOrDefault(s => s.Id == Int32.Parse(Id));
                 invoice.TotalMoney = total;
                 invoice.Postcode = Postcode; 
                 invoice.amount = count; 
@@ -213,9 +232,10 @@ namespace WebShop.Controllers
                         Removecombo(item.Combo.Id);
                     }  
                 }
-                
             }
-            HttpContext.Session.Remove("paypal");
+            if(HttpContext.Session.GetString("success") == "cancel"){
+                return Redirect("/Checkout");
+            }
             return Redirect("/Product");
 
         } 
@@ -227,6 +247,11 @@ namespace WebShop.Controllers
                 var data =_context.Customer.Where(s => s.UserName.Equals(username) && s.PassWord.Equals(f_password)).ToList();
                 if (data.Count() > 0)
                 {
+                    var customers = data.First();
+                    if(customers.status == "Block"){
+                        HttpContext.Session.SetString("Block","Block");
+                        return Redirect("/Checkout");
+                    }
                     //add session
                     HttpContext.Session.SetString("FullName", data.FirstOrDefault().FirstName +" "+ data.FirstOrDefault().LastName);
                     HttpContext.Session.SetString("Email", data.FirstOrDefault().Email);
@@ -254,8 +279,6 @@ namespace WebShop.Controllers
             }
             return byte2String;
         }
-
-
         public IActionResult Removecart(int? id)
         {
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
@@ -284,7 +307,6 @@ namespace WebShop.Controllers
             }
             return -1;
         }
-        
         private int isExistcombo(int? id)
         {
             List<ItemCombo> cart = SessionCombo.GetObjectFromJsonCombo<List<ItemCombo>>(HttpContext.Session, "cartcombo");

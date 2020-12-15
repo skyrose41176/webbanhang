@@ -8,8 +8,8 @@
                 <div class="container">
                     <div class="breadcrumb-content">
                         <ul>
-                            <li><a href="">Home</a></li>
-                            <li class="active">Single Product</li>
+                            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="active">Details Combo</li>
                         </ul>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
                                             <div class="quantity">
                                                 <label>Quantity</label>
                                                 <div class="cart-plus-minus">
-                                                    <input class="cart-plus-minus-box" name="quatity" value="1" type="text">
+                                                    <input class="cart-plus-minus-box" name="quatity" value="1" type="number">
                                                     <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                                     <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                                 </div>
