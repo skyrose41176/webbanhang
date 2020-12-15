@@ -30,23 +30,23 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var item in ViewBag.cart)
+                                            @foreach (var item in ViewBag.cart2)
                                             {
                                             <tr>
-                                                <td class="li-product-remove"><a  asp-action="remove" asp-route-id="@item.Product.Id"><i class="fa fa-times"></i></a></td>
-                                                <td class="li-product-thumbnail"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.Product.Id"><img src="~/images/product/large-size/ALL/@item.Product.Image" alt="Li's Product Image"></a></td>
-                                                <td class="li-product-name"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.Product.Id">@item.Product.Productname</a></td>
-                                                <td class="li-product-price"><span class="amount"> @string.Format("{0:N0}",@item.Product.Price)VNĐ</span></td>
+                                                <td class="li-product-remove"><a  asp-action="remove" asp-route-id="@item.products.Product.Id"><i class="fa fa-times"></i></a></td>
+                                                <td class="li-product-thumbnail"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.products.Product.Id"><img src="~/images/product/large-size/ALL/@item.products.Product.Image" alt="Li's Product Image"></a></td>
+                                                <td class="li-product-name"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.products.Product.Id">@item.products.Product.Productname</a></td>
+                                                <td class="li-product-price"><span class="amount"> @string.Format("{0:N0}",@item.products.Product.Price)VNĐ</span></td>
                                                 <td class="quantity">
                                                     <div class="">
-                                                        <input class="cart-plus-minus-box" name="product[]" value="@item.Quantity" id="value" max="@item.Product.Amount" min="1" type="number">
-                                             
+                                                        <input class="cart-plus-minus-box" name="product[]" value="@item.products.Quantity" id="value" max="@item.quantity" min="1" type="number">
+                                                        <input  name="id[]" value="@item.products.Product.Id" type="hidden">
                                                     </div>
                                                 </td>
-                                                <td class="product-subtotal"><span class="amount"> @string.Format("{0:N0}",item.Product.Price * item.Quantity)VNĐ</span></td>
+                                                <td class="product-subtotal"><span class="amount"> @string.Format("{0:N0}",item.products.Product.Price * item.products.Quantity)VNĐ</span></td>
                                             </tr>  
                                             }
-                                            @foreach (var item in ViewBag.carcombo2)
+                                            @foreach (var item in ViewBag.cartcombo2)
                                             {
                                             <tr>
                                                 <td class="li-product-remove"><a  asp-controller="Combo" asp-action="remove" asp-route-id="@item.combos.Combo.Id"><i class="fa fa-times"></i></a></td>
@@ -56,6 +56,7 @@
                                                 <td class="quantity">
                                                     <div class="">
                                                         <input class="" name="combo[]" value="@item.combos.Quantity" max="@item.quantity" min="1" type="number">
+                                                        <input  name="idcb[]" value="@item.combos.Combo.Id" type="hidden">
                                                     </div>
                                                 </td>
                                                 <td class="product-subtotal"><span class="amount"> @string.Format("{0:N0}",item.combos.Combo.Total * item.combos.Quantity)VNĐ</span></td>

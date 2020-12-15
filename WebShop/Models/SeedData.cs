@@ -901,13 +901,13 @@ namespace WebShop.Models
                             Image = "Giảm toàn bộ.png"
                         },
                         new Combo{
-                            ComboName = "Giảm sập sàn",
+                            ComboName = "Giảm khủng",
                             DayStart = DateTime.Now,
                             DayEnd = Convert.ToDateTime("27-12-2020"),
                             Total = 30000000,
                             Discount = "4",
                             DiscountMoney = "100000",
-                            Image = "Giảm sập sàn.png"
+                            Image = "Giảm khủng.png"
                         },
                         new Combo{
                             ComboName = "Giảm nhẹ",

@@ -142,11 +142,11 @@ namespace WebShop.Controllers
                 url = await payPalAPI.getRedirectUrlToPayPal(total2, "USD");
                 //adddatabase
                 var Address = Request.Form["Address"][0];
-                 HttpContext.Session.SetString("Address",Address);
+                HttpContext.Session.SetString("Address",Address);
                 var City = Request.Form["City"][0];
-                 HttpContext.Session.SetString("City",City);
+                HttpContext.Session.SetString("City",City);
                 var County = Request.Form["County"][0];
-                 HttpContext.Session.SetString("County",County);
+                HttpContext.Session.SetString("County",County);
                 var Postcode = Request.Form["Postcode"][0];
                 HttpContext.Session.SetString("Postcode",Postcode);
                 var Odernote = Request.Form["Odernote"][0];

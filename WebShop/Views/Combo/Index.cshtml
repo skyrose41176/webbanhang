@@ -105,7 +105,16 @@
                                                     </div>
                                                     <div class="add-actions">
                                                         <ul class="add-actions-link">
-                                                            <li class="add-cart active"><a  asp-action="AddtoCart" asp-route-id="@item.Id">Add to cart</a></li>
+                                                            @foreach (var item2 in ViewBag.listcb)
+                                                            {
+                                                                if(item2.combo_id == @item.Id){
+                                                                    if(item2.Quantity == 0){
+                                                                         <li class="add-cart"><a >Sold Out</a></li>
+                                                                    }else{
+                                                                        <li class="add-cart active"><a  asp-action="AddtoCart" asp-route-id="@item.Id">Add to cart</a></li>
+                                                                    }
+                                                                }
+                                                            }
                                                             <li><a class="links-details" asp-action="AddtoWishCombo" asp-route-id="@item.Id"><i class="fa fa-heart-o"></i></a></li>
                                                         </ul>
                                                     </div>

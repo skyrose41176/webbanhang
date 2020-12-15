@@ -23,12 +23,26 @@ namespace WebShop.Controllers
             public ItemCombo combos{get;set;}
             public int? quantity{get;set;}
         }
+        public class tmpproduct{
+            public Item products{get;set;}
+            public int? quantity{get;set;}
+        }
         public void check(){
               //cart
             var count=0;
             var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             if(cart != null){
             ViewBag.cart = cart;
+            List<tmpproduct> a = new List<tmpproduct>();
+            foreach(var item in cart){
+                tmpproduct tmpproducts= new tmpproduct();
+                var list =  _context.Product
+                .Where(s => s.Id == item.Product.Id).First();
+                tmpproducts.products=item;
+                tmpproducts.quantity=list.Amount + item.Quantity;
+                a.Add(tmpproducts);
+            }
+            ViewBag.cart2 = a;
             var total =  cart.Sum(item => item.Product.Price * item.Quantity);          
             count = count + cart.Sum(item => item.Quantity);
             ViewBag.count=count;
@@ -40,6 +54,8 @@ namespace WebShop.Controllers
             }
             }else{
                 List<Item> cart1 = new List<Item>();
+                List<tmpproduct> a = new List<tmpproduct>();
+                ViewBag.cart2 = a;
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart1);
                 ViewBag.cart = cart1;
                 ViewBag.count = 0;
@@ -64,10 +80,10 @@ namespace WebShop.Controllers
                     minn = list[i].Products.Amount;
                 }
                 temps.combos=item;
-                temps.quantity=minn;
+                temps.quantity=minn + item.Quantity;
                 a.Add(temps);
             }
-            ViewBag.carcombo2 = a;
+            ViewBag.cartcombo2 = a;
             
             var combototal =  ViewBag.total + cartcombo.Sum(item => item.Combo.Total * item.Quantity);
             countcombo = countcombo + cartcombo.Sum(item => item.Quantity);
@@ -81,7 +97,7 @@ namespace WebShop.Controllers
             }else{
                 List<ItemCombo> cart1 = new List<ItemCombo>();
                 List<temp> a = new List<temp>();
-                ViewBag.carcombo2 = a;
+                ViewBag.cartcombo2 = a;
                 SessionCombo.SetObjectAsJsonCombo(HttpContext.Session, "cartcombo", cart1);
                 ViewBag.cartcombo = cart1;
                 ViewBag.count = 0;
@@ -307,10 +323,14 @@ namespace WebShop.Controllers
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
         }
-        public IActionResult Removex(int? id)
+        public async Task<IActionResult> Removex(int? id)
         {
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             int index = isExist(id);
+            var list = await _context.Product
+                .Where(s => s.Id == id).FirstAsync();
+            list.Amount = list.Amount + cart[index].Quantity  ;
+            await _context.SaveChangesAsync();
             cart.RemoveAt(index);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
@@ -329,17 +349,36 @@ namespace WebShop.Controllers
             return -1;
         }
         //update
-        public IActionResult Update()
+        public async Task<IActionResult> Update()
         {
-            check();
             if(Request.HasFormContentType && Request.Form != null && Request.Form.Count() > 0){
                 var list = Request.Form["product[]"];
+                var id = Request.Form["id[]"];
+                for(var i = 0;i < id.Count;i++){     
+                     List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");                  
+                    var product = await _context.Product
+                    .Where(s => s.Id == Int16.Parse(id[i])).FirstAsync();
+                    product.Amount = product.Amount + cart[i].Quantity -  Int16.Parse(list[i]);
+                    await _context.SaveChangesAsync();
+                }
                 for(var i = 0;i < list.Count;i++){   
                     List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");                
                     cart[i].Quantity = Int16.Parse(list[i]);
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-                }
+                    }
+                
                 var listcombo = Request.Form["combo[]"];
+                var idcb = Request.Form["idcb[]"];
+                for(var i = 0;i < idcb.Count;i++){     
+                    List<ItemCombo> cartcombo = SessionCombo.GetObjectFromJsonCombo<List<ItemCombo>>(HttpContext.Session, "cartcombo");
+                    var combo = await _context.ComboProduct.Include("Products")
+                    .Where(s => s.Combo_Id == Int16.Parse(idcb[i])).ToListAsync();
+                    for(int j =0;j<combo.Count();j++)
+                    {
+                        combo[j].Products.Amount = combo[j].Products.Amount + cartcombo[i].Quantity - Int16.Parse(listcombo[i]);
+                    }
+                    await _context.SaveChangesAsync();
+                }
                 for(var i = 0;i< listcombo.Count;i++){
                     List<ItemCombo> cartcombo = SessionCombo.GetObjectFromJsonCombo<List<ItemCombo>>(HttpContext.Session, "cartcombo");
                     cartcombo[i].Quantity = Int16.Parse(listcombo[i]);

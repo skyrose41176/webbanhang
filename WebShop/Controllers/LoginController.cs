@@ -137,7 +137,7 @@ namespace WebShop.Controllers
                     }
                     else
                     {
-                        ViewBag.error = "Email already exists";
+                         HttpContext.Session.SetString("Error", "Email already exists");
                     }
             }
             return Redirect("/Login");

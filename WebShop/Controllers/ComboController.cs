@@ -19,6 +19,10 @@ namespace WebShop.Controllers
         {
             _context = context;
         }
+        public class checkcommbo{
+            public int combo_id{get;set;}
+            public int Quantity{get;set;}
+        }
         public void check(){
             //cart
             var count=0;
@@ -137,11 +141,37 @@ namespace WebShop.Controllers
                     .OrderBy(s => s.ComboName);
                     break;
             }
+            
+            var listcb = await _context.Combo
+                .ToListAsync();
+            List<int> a = new List<int>();
+            for(var i =0; i< listcb.Count() ;i++){
+                a.Add(listcb[i].Id);
+            }
+            List<checkcommbo> checkcommbos = new List<checkcommbo>();
+            for(var i = 0; i< a.Count() ;i++){
+                var listcombo = await _context.ComboProduct.Include("Products").Where(s => s.Combo_Id == a[i])
+                .ToListAsync();
+                checkcommbo check = new checkcommbo();
+                for(var j = 0; j< listcombo.Count() ;j++){
+                if(listcombo[j].Products.Amount == 0){
+                    check.combo_id= listcombo[j].Combo_Id; 
+                    check.Quantity = 0;
+                    break;
+                }else{
+                    check.combo_id= listcombo[j].Combo_Id; 
+                    check.Quantity = 1;
+                }
+                }
+                checkcommbos.Add(check);
+            }
+            ViewBag.listcb = checkcommbos;
+            //page
             int pageSize = 6;
             int pageNumber = (page ?? 1);
             return View(combos.ToList().ToPagedList(pageNumber, pageSize));
         }
-        public IActionResult AddtoCart(int? id)
+        public async Task<IActionResult> AddtoCart(int? id)
         {
             var combos = from s in _context.Combo
                    select s; 
@@ -152,11 +182,19 @@ namespace WebShop.Controllers
             if (SessionCombo.GetObjectFromJsonCombo<List<ItemCombo>>(HttpContext.Session, "cartcombo") == null)
             {
                 List<ItemCombo> cart = new List<ItemCombo>();
+                var list = await _context.ComboProduct.Include("Products")
+                .Where(s => s.Combo_Id == id).ToListAsync();
+                foreach(var item in list)
+                {
+                    item.Products.Amount -= Int16.Parse(qty);
+                }
+                await _context.SaveChangesAsync();
                 cart.Add(new ItemCombo { Combo = combos.First(s => s.Id == id), Quantity = Int16.Parse(qty) });
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
             else
             {
+                
                 List<ItemCombo> cart = SessionCombo.GetObjectFromJsonCombo<List<ItemCombo>>(HttpContext.Session, "cartcombo");
                 int index = isExist(id);
                 if (index != -1)
@@ -168,21 +206,42 @@ namespace WebShop.Controllers
                     cart.Add(new ItemCombo { Combo = combos.First(s => s.Id == id), Quantity = Int16.Parse(qty) });
                 }
                 SessionCombo.SetObjectAsJsonCombo(HttpContext.Session, "cartcombo", cart);
+                var list = await _context.ComboProduct.Include("Products")
+                .Where(s => s.Combo_Id == id).ToListAsync();
+                foreach(var item in list)
+                {
+                    item.Products.Amount = item.Products.Amount - Int32.Parse(qty);
+                }
+                await _context.SaveChangesAsync();
             }
             return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
         }
-        public IActionResult Remove(int? id)
+        public async Task<IActionResult> Remove(int? id)
         {
             List<ItemCombo> cart = SessionCombo.GetObjectFromJsonCombo<List<ItemCombo>>(HttpContext.Session, "cartcombo");
             int index = isExist(id);
+            var list = await _context.ComboProduct.Include("Products")
+                .Where(s => s.Combo_Id == id).ToListAsync();
+            foreach(var item in list)
+            {
+                item.Products.Amount = item.Products.Amount + cart[index].Quantity;
+            }
+            await _context.SaveChangesAsync();
             cart.RemoveAt(index);
             SessionCombo.SetObjectAsJsonCombo(HttpContext.Session, "cartcombo", cart);
             return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
         }
-        public IActionResult Removex(int? id)
+        public async Task<IActionResult> Removex(int? id)
         {
             List<ItemCombo> cart = SessionCombo.GetObjectFromJsonCombo<List<ItemCombo>>(HttpContext.Session, "cartcombo");
             int index = isExist(id);
+            var list = await _context.ComboProduct.Include("Products")
+                .Where(s => s.Combo_Id == id).ToListAsync();
+            foreach(var item in list)
+            {
+                item.Products.Amount = item.Products.Amount + cart[index].Quantity;
+            }
+            await _context.SaveChangesAsync();
             cart.RemoveAt(index);
             SessionCombo.SetObjectAsJsonCombo(HttpContext.Session, "cartcombo", cart);
             return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
@@ -225,11 +284,9 @@ namespace WebShop.Controllers
             for(var i =0; i< listcb.Count() ;i++){
                 a.Add(listcb[i].Product_Id);
             }
-            List<Product> product = new List<Product>();
             for(var i = 0; i< a.Count() ;i++){
                 var pro = await _context.Product
                 .Where(s => s.Id == a[i]).ToListAsync();
-                var azxc = pro[0].Amount;
                 if(pro[0].Amount == 0){
                     ViewBag.listcb = "0";
                 }
@@ -237,6 +294,14 @@ namespace WebShop.Controllers
             var list = await _context.ComboProduct.Include("Products")
             .Where(s => s.Combo_Id == id).ToListAsync();
             ViewBag.list = list;
+            int? min = 0;
+           for(int i=1;i<list.Count();i++){
+                min=list[0].Products.Amount;
+                if(min > list[i].Products.Amount){
+                    min = list[i].Products.Amount;
+                }
+            }
+            ViewBag.min = min;
             check();
             wish();
             return View();

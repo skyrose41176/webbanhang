@@ -41,7 +41,11 @@
                                         <div class="col-md-8">
                                         @if (Context.Session.GetString("loginfail") != null)
                                         {
-                                            <span class="badge badge-danger">@Context.Session.GetString("loginfail")</span>                                           
+                                            <span class="badge badge-danger">@Context.Session.GetString("loginfail")</span>
+                                                                                       
+                                        }
+                                        @{
+                                                Context.Session.Remove("loginfail");
                                         }
                                         </div>
                                         <div class="col-md-4 mt-10 mb-20 text-left text-md-right">
@@ -80,19 +84,18 @@
                                         @Html.LabelFor(m => m.Email)
                                         @Html.TextBoxFor(m => m.Email, "", new { @class = "mb-0", @placeholder = "Email" })
                                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "badge badge-danger" })
-                                        @if (ViewBag.error != null)
+                                        @if (Context.Session.GetString("Error") != null)
                                         {
-                                            <span class="badge badge-danger">@ViewBag.error</span>
+                                            <span class="badge badge-danger">@Context.Session.GetString("Error")</span>
+                                        }
+                                        @{
+                                                Context.Session.Remove("Error");
                                         }
                                         </div>
                                          <div class="col-md-12 mb-20">
                                         @Html.LabelFor(m => m.Phone)
                                         @Html.TextBoxFor(m => m.Phone, "", new { @class = "mb-0", @placeholder = "Phone" })
                                         @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "badge badge-danger" })
-                                        @if (ViewBag.error != null)
-                                        {
-                                            <span class="badge badge-danger">@ViewBag.error</span>
-                                        }
                                         </div>
                                         <div class="col-md-12 mb-20">
                                         @Html.LabelFor(m => m.Birthdate)
