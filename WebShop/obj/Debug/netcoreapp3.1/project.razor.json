@@ -1,5 +1,5 @@
 {
-  "FilePath": "f:\\webbanhang\\shop\\WebShop\\WebShop.csproj",
+  "FilePath": "f:\\heroku\\webbanhang\\WebShop\\WebShop.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "3.0",
@@ -14392,103 +14392,103 @@
   "RootNamespace": "WebShop",
   "Documents": [
     {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\_ViewStart.cshtml",
-      "TargetPath": "Views\\_ViewStart.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Home\\FAQ.cshtml",
-      "TargetPath": "Views\\Home\\FAQ.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\_ViewImports.cshtml",
-      "TargetPath": "Views\\_ViewImports.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Combo\\Index.cshtml",
-      "TargetPath": "Views\\Combo\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Login\\Account.cshtml",
-      "TargetPath": "Views\\Login\\Account.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Home\\About.cshtml",
-      "TargetPath": "Views\\Home\\About.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Checkout\\Index.cshtml",
-      "TargetPath": "Views\\Checkout\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Product\\Index.cshtml",
-      "TargetPath": "Views\\Product\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Product\\Cart.cshtml",
-      "TargetPath": "Views\\Product\\Cart.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Product\\Wishlist.cshtml",
-      "TargetPath": "Views\\Product\\Wishlist.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Home\\Index.cshtml",
-      "TargetPath": "Views\\Home\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Login\\Index.cshtml",
-      "TargetPath": "Views\\Login\\Index.cshtml",
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\_ViewStart.cshtml",
+      "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Home\\Error.cshtml",
-      "TargetPath": "Views\\Home\\Error.cshtml",
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Checkout\\Index.cshtml",
+      "TargetPath": "Views\\Checkout\\Index.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Shared\\Error.cshtml",
-      "TargetPath": "Views\\Shared\\Error.cshtml",
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Home\\FAQ.cshtml",
+      "TargetPath": "Views\\Home\\FAQ.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Combo\\Details.cshtml",
-      "TargetPath": "Views\\Combo\\Details.cshtml",
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Home\\Index.cshtml",
+      "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Product\\Details.cshtml",
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\_ViewImports.cshtml",
+      "TargetPath": "Views\\_ViewImports.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Product\\Details.cshtml",
       "TargetPath": "Views\\Product\\Details.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Login\\Edit.cshtml",
-      "TargetPath": "Views\\Login\\Edit.cshtml",
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Product\\Index.cshtml",
+      "TargetPath": "Views\\Product\\Index.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Shared\\_Layout.cshtml",
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Shared\\_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "f:\\webbanhang\\shop\\WebShop\\Views\\Home\\Contact.cshtml",
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Login\\Account.cshtml",
+      "TargetPath": "Views\\Login\\Account.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Combo\\Index.cshtml",
+      "TargetPath": "Views\\Combo\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Product\\Cart.cshtml",
+      "TargetPath": "Views\\Product\\Cart.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Shared\\Error.cshtml",
+      "TargetPath": "Views\\Shared\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Home\\Contact.cshtml",
       "TargetPath": "Views\\Home\\Contact.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Home\\Error.cshtml",
+      "TargetPath": "Views\\Home\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Product\\Wishlist.cshtml",
+      "TargetPath": "Views\\Product\\Wishlist.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Combo\\Details.cshtml",
+      "TargetPath": "Views\\Combo\\Details.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Login\\Index.cshtml",
+      "TargetPath": "Views\\Login\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Login\\Edit.cshtml",
+      "TargetPath": "Views\\Login\\Edit.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "f:\\heroku\\webbanhang\\WebShop\\Views\\Home\\About.cshtml",
+      "TargetPath": "Views\\Home\\About.cshtml",
       "FileKind": "mvc"
     }
   ],
