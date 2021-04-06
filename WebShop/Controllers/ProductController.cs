@@ -284,19 +284,19 @@ namespace WebShop.Controllers
             if (SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") == null)
             {
                 List<Item> cart = new List<Item>();
-                var list = await _context.Product
+                /*var list = await _context.Product
                 .Where(s => s.Id == id).FirstAsync();
                 list.Amount = list.Amount - Int16.Parse(qty);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();*/
                 cart.Add(new Item { Product = products.First(s => s.Id == id), Quantity = Int16.Parse(qty)});
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
             else
             {
-                var list = await _context.Product
+               /* var list = await _context.Product
                 .Where(s => s.Id == id).FirstAsync();
                 list.Amount = list.Amount - Int16.Parse(qty);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();*/
                 List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
                 int index = isExist(id);
                 if (index != -1)
@@ -315,10 +315,10 @@ namespace WebShop.Controllers
         {
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             int index = isExist(id);
-            var list = await _context.Product
+           /* var list = await _context.Product
                 .Where(s => s.Id == id).FirstAsync();
             list.Amount = list.Amount + cart[index].Quantity  ;
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();*/
             cart.RemoveAt(index);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
@@ -327,10 +327,10 @@ namespace WebShop.Controllers
         {
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             int index = isExist(id);
-            var list = await _context.Product
+           /* var list = await _context.Product
                 .Where(s => s.Id == id).FirstAsync();
             list.Amount = list.Amount + cart[index].Quantity  ;
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();*/
             cart.RemoveAt(index);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return Redirect(ControllerContext.HttpContext.Request.Headers["Referer"].ToString());
@@ -354,13 +354,13 @@ namespace WebShop.Controllers
             if(Request.HasFormContentType && Request.Form != null && Request.Form.Count() > 0){
                 var list = Request.Form["product[]"];
                 var id = Request.Form["id[]"];
-                for(var i = 0;i < id.Count;i++){     
+               /* for(var i = 0;i < id.Count;i++){     
                      List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");                  
                     var product = await _context.Product
                     .Where(s => s.Id == Int16.Parse(id[i])).FirstAsync();
                     product.Amount = product.Amount + cart[i].Quantity -  Int16.Parse(list[i]);
                     await _context.SaveChangesAsync();
-                }
+                }*/
                 for(var i = 0;i < list.Count;i++){   
                     List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");                
                     cart[i].Quantity = Int16.Parse(list[i]);
@@ -369,7 +369,7 @@ namespace WebShop.Controllers
                 
                 var listcombo = Request.Form["combo[]"];
                 var idcb = Request.Form["idcb[]"];
-                for(var i = 0;i < idcb.Count;i++){     
+                /*for(var i = 0;i < idcb.Count;i++){     
                     List<ItemCombo> cartcombo = SessionCombo.GetObjectFromJsonCombo<List<ItemCombo>>(HttpContext.Session, "cartcombo");
                     var combo = await _context.ComboProduct.Include("Products")
                     .Where(s => s.Combo_Id == Int16.Parse(idcb[i])).ToListAsync();
@@ -378,7 +378,7 @@ namespace WebShop.Controllers
                         combo[j].Products.Amount = combo[j].Products.Amount + cartcombo[i].Quantity - Int16.Parse(listcombo[i]);
                     }
                     await _context.SaveChangesAsync();
-                }
+                }*/
                 for(var i = 0;i< listcombo.Count;i++){
                     List<ItemCombo> cartcombo = SessionCombo.GetObjectFromJsonCombo<List<ItemCombo>>(HttpContext.Session, "cartcombo");
                     cartcombo[i].Quantity = Int16.Parse(listcombo[i]);

@@ -345,8 +345,66 @@
                                         </div>
                                         @if(@ViewBag.total > 0){
                                           <div class="order-button-payment">
-                                              <input value="Place order" type="submit"  >
+                                            <form asp-action="Index" asp-controller="Save" asp-antiforgery="true">
+                                              <input value="Place order" type="submit">
+                                            </form>
                                           </div>
+                                            @if (ViewBag.qrcode != null)      
+                                                    {      
+                                                      <div class="row mt-3" align="center">      
+                                                        <div class="col-md-12">      
+                                                          <div class="row"><div class="col-md-12">Vui lòng quét mã sau để thanh toán</div></div>
+                                                           <div class="row">      
+                                                          <div class="col-md-12">
+                                                            <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ViewBag.qrcode))" height="300" width="300"/>
+                                                          </div>  
+                                                          </div>    
+                                                        </div>      
+                                                      </div>      
+                                                    }
+                                          <div>
+                                        @* <form asp-action="Index" asp-controller="Save" asp-antiforgery="true">      
+                                          <div class="container">      
+                                            <div class="panel-group">      
+                                              <div class="panel panel-info">
+                                                <div class="panel-body">      
+                                                  <div class="row">      
+                                                    <div class="col-md-12">
+                                                      <div class="col-md-9"><input type="text" class="form-control" id="txtQRCode" name="txtQRCode" /></div>      
+                                                    </div>      
+                                                  </div>      
+                                                  <div class="row mt-3">      
+                                                    <div class="col-md-12">      
+                                                      <div class="col-md-3"></div>      
+                                                      <div class="col-md-9">      
+                                                        <input type="submit" class="btn btn-primary" id="btnSubmit" value="Generate QR Code" autocomplete="off" />      
+                                                      </div>      
+                                                    </div>      
+                                                  </div>      
+                                                  @{      
+                                                    if (ViewBag.qrcode != null)      
+                                                    {      
+                                                      <div class="row mt-3">      
+                                                        <div class="col-md-12">      
+                                                          <div class="col-md-3"></div>      
+                                                          <div class="col-md-9">
+                                                            <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ViewBag.qrcode))" height="300" width="300"/>
+                                                          </div>      
+                                                        </div>      
+                                                      </div>      
+                                                    }      
+                                                  }      
+                                                </div>      
+                                              </div>      
+                                            </div>      
+                                          </div>      
+                                        </form>  *@
+                                      </div>
+                    
+
+
+
+
                                         }else{
                                           <div class="order-button-payment">
                                             <a class="btn" asp-controller="Product" asp-action="Index">Buy Something</a>
@@ -358,6 +416,7 @@
                             </div>
                         </div>
                         }
+                  
                     }
                 </div>
             </div>

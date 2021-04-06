@@ -15,6 +15,10 @@ using WebShop.Models;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
 using WebShop.PayPalHelpers;
+using QRCoder;
+using System.Drawing;
+using System.IO;
+
 namespace WebShop.Controllers
 {
     public class CheckoutController : Controller
@@ -117,8 +121,17 @@ namespace WebShop.Controllers
                     var cus = _context.Customer.FirstOrDefault(s => s.Id == HttpContext.Session.GetInt32("idUser"));
                     ViewBag.cuslogin= cus;
             }
-            
-            return View();
+            if(HttpContext.Session.GetString("qrcode") != null)
+            {
+                String txtQRCode = HttpContext.Session.GetString("qrcode");
+                QRCodeGenerator _qrCode = new QRCodeGenerator();      
+                QRCodeData _qrCodeData = _qrCode.CreateQrCode(txtQRCode,QRCodeGenerator.ECCLevel.Q);      
+                QRCode qrCode = new QRCode(_qrCodeData);      
+                Bitmap qrCodeImage = qrCode.GetGraphic(20);
+                ViewBag.qrcode = BitmapToBytesCode(qrCodeImage);
+            }
+
+            return View();     
         }
         public async Task<IActionResult> sucsess()
         {
@@ -130,6 +143,17 @@ namespace WebShop.Controllers
             HttpContext.Session.SetString("success","cancel");
             return RedirectToAction("Save");
         }
+        [NonAction]      
+        private static Byte[] BitmapToBytesCode(Bitmap image)      
+        {      
+        using (MemoryStream stream = new MemoryStream())      
+        {      
+            image.Save(stream, System.Drawing.Imaging.ImageFormat.Png);      
+            return stream.ToArray();      
+        }      
+        } 
+        [ValidateAntiForgeryToken]      
+        [HttpPost] 
         public async Task<IActionResult> Save()
         {   
             if(Request.HasFormContentType && Request.Form != null && Request.Form.Count() > 0){
@@ -140,6 +164,8 @@ namespace WebShop.Controllers
                 var totala = Request.Form["total"][0];
                 double total2 = Int32.Parse(totala)/23139  + Int32.Parse(totala)%23139;
                 url = await payPalAPI.getRedirectUrlToPayPal(total2, "USD");
+                HttpContext.Session.SetString("qrcode",url);
+                return Redirect("/Checkout");
                 //adddatabase
                 var Address = Request.Form["Address"][0];
                 HttpContext.Session.SetString("Address",Address);
@@ -236,7 +262,7 @@ namespace WebShop.Controllers
             if(HttpContext.Session.GetString("success") == "cancel"){
                 return Redirect("/Checkout");
             }
-            return Redirect("/Product");
+            return Redirect("/Checkout");
 
         } 
         public ActionResult Login(string username,string password)
@@ -325,5 +351,6 @@ namespace WebShop.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

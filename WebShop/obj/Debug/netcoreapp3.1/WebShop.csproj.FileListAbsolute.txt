@@ -198,7 +198,8 @@ F:\webbanhang\shop\WebShop\obj\Debug\netcoreapp3.1\Razor\Views\Login\Account.csh
 F:\webbanhang\shop\WebShop\obj\Debug\netcoreapp3.1\Razor\Views\Login\Edit.cshtml.g.cs
 F:\webbanhang\shop\WebShop\bin\Debug\netcoreapp3.1\PayPalCheckoutSdk.dll
 F:\webbanhang\shop\WebShop\bin\Debug\netcoreapp3.1\PayPalHttp-Dotnet.dll
+F:\webbanhang\shop\WebShop\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 F:\webbanhang\shop\WebShop\obj\Debug\netcoreapp3.1\WebShop.csproj.CoreCompileInputs.cache
 F:\webbanhang\shop\WebShop\obj\Debug\netcoreapp3.1\WebShop.MvcApplicationPartsAssemblyInfo.cs
 F:\webbanhang\shop\WebShop\obj\Debug\netcoreapp3.1\WebShop.MvcApplicationPartsAssemblyInfo.cache
-F:\webbanhang\shop\WebShop\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+F:\webbanhang\shop\WebShop\bin\Debug\netcoreapp3.1\QRCoder.dll
