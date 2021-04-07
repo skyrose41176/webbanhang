@@ -1,1 +1,1 @@
-web: dotnet ./webShop/webShop.dll
+web: cd $HOME/heroku_output/webShop && dotnet ./webShop.dll --server.urls http://+:$PORT ${CORE_ENVIRONMENT}
