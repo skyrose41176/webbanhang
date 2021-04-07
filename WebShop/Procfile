@@ -1,0 +1,1 @@
+web: dotnet ./webShop/webShop.dll
