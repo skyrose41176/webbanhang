@@ -1,1 +1,1 @@
-web: ASPNETCORE_URLS='http://+:$PORT' dotnet ./WebShop.dll --urls http://+:$PORT
+web: echo $PATH && cd $HOME/heroku_output && $HOME/.heroku/dotnet/dotnet ./WebShop.dll --urls http://+:\$PORT
