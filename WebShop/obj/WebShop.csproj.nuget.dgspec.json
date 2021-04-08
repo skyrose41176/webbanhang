@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\heroku\\webbanhang\\Webshop\\WebShop.csproj": {}
+    "F:\\heroku\\webbanhang\\WebShop\\WebShop.csproj": {}
   },
   "projects": {
-    "F:\\heroku\\webbanhang\\Webshop\\WebShop.csproj": {
+    "F:\\heroku\\webbanhang\\WebShop\\WebShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\heroku\\webbanhang\\Webshop\\WebShop.csproj",
+        "projectUniqueName": "F:\\heroku\\webbanhang\\WebShop\\WebShop.csproj",
         "projectName": "WebShop",
-        "projectPath": "F:\\heroku\\webbanhang\\Webshop\\WebShop.csproj",
+        "projectPath": "F:\\heroku\\webbanhang\\WebShop\\WebShop.csproj",
         "packagesPath": "C:\\Users\\tinhp\\.nuget\\packages\\",
-        "outputPath": "F:\\heroku\\webbanhang\\Webshop\\obj\\",
+        "outputPath": "F:\\heroku\\webbanhang\\WebShop\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\tinhp\\AppData\\Roaming\\NuGet\\NuGet.Config",

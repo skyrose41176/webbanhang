@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NZoSVd9niy7zThKq7CL60LOSt+k0UnRRH3x/MZrZNs14CeITSA7ILJ9aj1otJcPlZN0b90fDR3kD8mWCj0p14A==",
+  "dgSpecHash": "JxpofbKCiTXyGMqyCKZeL0eMWOylcW4Mj7EmLcTp/UH7zHd3OqXq/J5QnbURNQrD7zAZ92x24cErGSUorkB03A==",
   "success": true,
-  "projectFilePath": "F:\\heroku\\webbanhang\\Webshop\\WebShop.csproj",
+  "projectFilePath": "F:\\heroku\\webbanhang\\WebShop\\WebShop.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tinhp\\.nuget\\packages\\microsoft.aspnet.mvc\\5.2.7\\microsoft.aspnet.mvc.5.2.7.nupkg.sha512",
     "C:\\Users\\tinhp\\.nuget\\packages\\microsoft.aspnet.razor\\3.2.7\\microsoft.aspnet.razor.3.2.7.nupkg.sha512",
